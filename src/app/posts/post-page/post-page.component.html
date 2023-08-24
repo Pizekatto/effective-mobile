@@ -1,0 +1,16 @@
+<mat-card *ngIf="post | async as post"
+          class="example-card">
+  <mat-card-header>
+    <mat-card-subtitle>Post ID: {{post.id}}</mat-card-subtitle>
+    <mat-card-title>{{post.title}}</mat-card-title>
+    <mat-divider></mat-divider>
+  </mat-card-header>
+  <mat-card-content>
+    <p> {{post.body}} </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <a mat-button
+       routerLink=".."
+       color="primary">НАЗАД</a>
+  </mat-card-actions>
+</mat-card>

@@ -1,29 +1,30 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { RouterTestingModule } from '@angular/router/testing'
+import { AppComponent } from './app.component'
+import { AccountService } from './account/account.service'
+import { DebugElement } from '@angular/core'
 
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    declarations: [AppComponent]
-  }));
+  let fixture: ComponentFixture<AppComponent>
+  let comp: AppComponent
+  let el: DebugElement
+  let service: jasmine.SpyObj<AccountService>
+
+  beforeEach(() => {
+    const spy = jasmine.createSpyObj('AccountService', ['logout'], ['user'])
+
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      providers: [{ provide: AccountService, useValue: spy }],
+      declarations: [AppComponent]
+    })
+    fixture = TestBed.createComponent(AppComponent)
+    comp = fixture.componentInstance
+    el = fixture.debugElement
+    service = TestBed.inject(AccountService) as jasmine.SpyObj<AccountService>
+  })
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'effective-mobile'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('effective-mobile');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('effective-mobile app is running!');
-  });
-});
+    expect(comp).toBeDefined()
+  })
+})
